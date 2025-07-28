@@ -4,6 +4,7 @@ import PurchasesList from "./purchases-list";
 import { Order } from "@/typescript/order";
 
 
+
 export default async function Page() {
     const user = await getUser();
     const orders = await prisma.orders.findMany({
@@ -17,7 +18,7 @@ export default async function Page() {
             <h1 className="font-bold text-2xl text-center">Mes commandes</h1>
             {
                 orders?.sort((a : Order, b : Order) => b.orderId - a.orderId)
-                    ?.map((order) => (
+                    ?.map((order : Order) => (
                         <PurchasesList order={order} key={order.orderId} />
                     ))
             }
