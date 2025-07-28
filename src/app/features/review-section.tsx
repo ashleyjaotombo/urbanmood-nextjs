@@ -1,8 +1,10 @@
 import prisma from "@/lib/prisma"
 import { ReviewCard } from "./review-card";
+import { Review } from "@/typescript/review";
+
 
 export const ReviewSection = async () => {
-    const reviews = await prisma.reviews.findMany();
+    const reviews : Review[] = await prisma.reviews.findMany();
 
     return (
         <div className="flex flex-col items-center">
