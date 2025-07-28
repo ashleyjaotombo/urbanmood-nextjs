@@ -1,0 +1,26 @@
+import { getUser } from "@/lib/auth-server";
+import prisma from "@/lib/prisma"
+import PurchasesList from "./purchases-list";
+
+
+
+export default async function Page() {
+    const user = await getUser();
+    const orders = await prisma.orders.findMany({
+        where: {
+            status: "done",
+            user_id: user?.id
+        }
+    })
+    return (
+        <div className="flex flex-col gap-8">
+            <h1 className="font-bold text-2xl text-center">Mes commandes</h1>
+            {
+                orders?.sort((a, b) => b.orderId - a.orderId)
+                    ?.map((order) => (
+                        <PurchasesList order={order} key={order.orderId} />
+                    ))
+            }
+        </div>
+    )
+}
