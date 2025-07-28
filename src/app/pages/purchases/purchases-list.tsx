@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import prisma from "@/lib/prisma"
 import { Order } from "@/typescript/order"
+import { OrderItem } from "@/typescript/order-item"
+import { Product } from "@/typescript/product"
 import Link from "next/link"
 
 type Props = {
@@ -18,11 +20,11 @@ export default async function PurchasesList({ order }: Props) {
 
     const ProductId: number[] = [];
 
-    orderItems?.map(item => (
+    orderItems?.map((item : OrderItem)=> (
         ProductId.push(item.productId)
     ))
 
-    const products = await prisma.products.findMany({
+    const products : Product[]= await prisma.products.findMany({
         where: {
             ProductId: {
                 in: ProductId
@@ -30,7 +32,7 @@ export default async function PurchasesList({ order }: Props) {
         }
     })
 
-    const orders = await prisma.orders.findUnique({
+    const orders : Order | null = await prisma.orders.findUnique({
         where: { orderId: order.orderId }
     })
 
