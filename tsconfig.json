@@ -39,7 +39,7 @@
     "src/app/pages/auth/signup-form"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules", ".next"
   ],
   "server": {
     "host": "0.0.0.0",
